@@ -24,7 +24,7 @@ function attachEvents() {
         const url = 'http://localhost:3030/jsonstore/forecaster/locations';
         const data = await makeRequest(url);
 
-        const code = data.find(element => element.name === location).code;
+        const code = data.find(element => element.name.toLowerCase() === location.toLowerCase()).code;
 
         const urlCurrent = `http://localhost:3030/jsonstore/forecaster/today/${code}`;
         const dataCurrent = await makeRequest(urlCurrent);
