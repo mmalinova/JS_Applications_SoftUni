@@ -17,7 +17,8 @@ function attachEvents() {
 async function loadCatches(e, mainDiv) {
     const response = await fetch('http://localhost:3030/data/catches');
     if (response.ok == false) {
-        alert('The request is not correct!');
+        const error = await response.json();
+        alert(error.message);
         return;
     }
     const data = await response.json();
@@ -89,7 +90,8 @@ async function append(e, mainDiv) {
         body: JSON.stringify(toAdd)
     });
     if (response.ok == false) {
-        alert(response.statusCode);
+        const error = await response.json();
+        alert(error.message);
         return;
     }
     inputs[0].value = '';
@@ -135,7 +137,8 @@ async function updateOrDelete(e, mainDiv) {
             body: JSON.stringify(updated)
         });
         if (response.ok == false) {
-            alert('The request is not correct!');
+            const error = await response.json();
+            alert(error.message);
             return;
         }
         loadCatches(e, mainDiv);
@@ -148,7 +151,8 @@ async function updateOrDelete(e, mainDiv) {
             headers: { 'X-Authorization': sessionStorage.getItem('authToken') }
         });
         if (response.ok == false) {
-            alert('The request is not correct!');
+            const error = await response.json();
+            alert(error.message);
             return;
         }
         loadCatches(e, mainDiv);
@@ -156,4 +160,3 @@ async function updateOrDelete(e, mainDiv) {
 }
 
 attachEvents();
-

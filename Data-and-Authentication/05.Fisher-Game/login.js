@@ -1,8 +1,8 @@
 function attachEvents() {
     sessionStorage.clear();
-    
+
     const forms = document.querySelectorAll('form');
-    
+
     forms[0].addEventListener('submit', register);
     forms[1].addEventListener('submit', login);
 }
@@ -28,11 +28,12 @@ async function register(e) {
 
     const response = await fetch('http://localhost:3030/users/register/', {
         method: 'post',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     });
     if (response.ok == false) {
-        alert('The request is not correct!');
+        const error = await response.json();
+        alert(error.message);
         return;
     }
     const data = await response.json();
@@ -61,11 +62,12 @@ async function login(e) {
 
     const response = await fetch('http://localhost:3030/users/login/', {
         method: 'post',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     });
     if (response.ok == false) {
-        alert('The request is not correct!');
+        const error = await response.json();
+        alert(error.message);
         return;
     }
     const data = await response.json();
