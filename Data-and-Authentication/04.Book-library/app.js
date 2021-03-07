@@ -71,7 +71,7 @@ async function editOrDelete(e) {
         document.querySelector('#editBook [name=title]').value = book.title;
         document.querySelector('#editBook [name=author]').value = book.author;
 
-        document.querySelector('#editBook').addEventListener('submit', (event) => editBook(event, id))
+        document.querySelector('#editBook').addEventListener('submit', (event) => editBook(event, id));
 
     } else if (e.target.className == 'deleteBook') {
         const response = await fetch('http://localhost:3030/jsonstore/collections/books/' + id, {
