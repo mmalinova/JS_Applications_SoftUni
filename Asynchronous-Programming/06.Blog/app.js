@@ -17,6 +17,7 @@ function attachEvents() {
             }
             const data = await response.json();
 
+            select.innerHTML = '';
             Object.entries(data).forEach(([key, value]) => {
                 const option = createEl('option', `${value.title}`, [`value = ${key}`]);
                 select.appendChild(option);

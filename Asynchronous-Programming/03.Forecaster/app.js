@@ -11,6 +11,7 @@ function attachEvents() {
 
     const submitBtn = document.getElementById('submit');
     submitBtn.addEventListener('click', async function () {
+        forecast.setAttribute('style', 'display:block');
         const currentDiv = document.getElementById('current');
         const upcomingSpan = document.getElementById('upcoming');
 
@@ -19,12 +20,19 @@ function attachEvents() {
 
         const location = document.getElementById('location').value;
         if (!location) {
+            alert('There is no location!');
             return;
         }
         const url = 'http://localhost:3030/jsonstore/forecaster/locations';
         const data = await makeRequest(url);
 
-        const code = data.find(element => element.name.toLowerCase() === location.toLowerCase()).code;
+        let code = data.find(element => element.name.toLowerCase() == location.toLowerCase());
+        if (code) {
+            code = code.code;
+        } else {
+            alert('There is no such city!');
+            return;
+        }
 
         const urlCurrent = `http://localhost:3030/jsonstore/forecaster/today/${code}`;
         const dataCurrent = await makeRequest(urlCurrent);
