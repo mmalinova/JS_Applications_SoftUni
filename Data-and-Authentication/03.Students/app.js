@@ -38,6 +38,10 @@ async function appendPerson(e) {
         alert('All fields are recuired!');
         return;
     }
+    if (!grade) {
+        alert('Grade must be a number!');
+        return;
+    }
 
     const response = await fetch('http://localhost:3030/jsonstore/collections/students', {
         method: 'post',

@@ -74,6 +74,9 @@ async function editOrDelete(e) {
         document.querySelector('#editBook').addEventListener('submit', (event) => editBook(event, id));
 
     } else if (e.target.className == 'deleteBook') {
+        document.getElementById('createBook').style.display = 'block';
+        document.getElementById('editBook').style.display = 'none';
+
         const response = await fetch('http://localhost:3030/jsonstore/collections/books/' + id, {
             method: 'delete'
         });

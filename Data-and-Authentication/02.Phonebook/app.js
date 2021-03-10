@@ -45,6 +45,10 @@ async function createContact(e) {
     const person = document.getElementById('person').value;
     const phone = document.getElementById('phone').value;
 
+    if (person == '' || phone == '') {
+        alert('The fields are empty!');
+        return;
+    }
     const response = await fetch('http://localhost:3030/jsonstore/phonebook', {
         method: 'post',
         headers: { 'Content-Type': 'application/json'},
