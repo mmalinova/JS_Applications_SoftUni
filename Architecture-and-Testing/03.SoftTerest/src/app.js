@@ -26,6 +26,7 @@ registerView('details', document.getElementById('details-page'), setupDetails);
 
 
 document.getElementById('views').remove();
+
 document.getElementById('logoutBtn').addEventListener('click', setupLogout(navigation));
 
 setupNavigation();
