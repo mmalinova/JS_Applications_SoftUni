@@ -73,10 +73,10 @@ export async function register(email, password) {
     return response;
 }
 
-export async function logout(email, password) {
-    const response = await get(settings.host + '/users/logout');
-
-    sessionStorage.removeItem('authToken');
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('userId');
+export async function logout() {
+    if (sessionStorage) {
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('email');
+        sessionStorage.removeItem('userId');
+    }
 }

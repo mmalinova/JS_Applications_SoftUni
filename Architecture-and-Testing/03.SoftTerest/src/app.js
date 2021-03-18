@@ -4,6 +4,7 @@ import { setupRegister } from '../views/register.js';
 import { setupLogin } from '../views/login.js';
 import { setupCreate } from '../views/create.js';
 import { setupDetails } from '../views/details.js';
+import { setupLogout } from '../views/logout.js';
 
 const views = {};
 const links = {};
@@ -23,14 +24,16 @@ registerView('login', document.getElementById('login-page'), setupLogin, 'loginL
 registerView('create', document.getElementById('create-page'), setupCreate, 'createLink');
 registerView('details', document.getElementById('details-page'), setupDetails);
 
+
 document.getElementById('views').remove();
+document.getElementById('logoutBtn').addEventListener('click', setupLogout(navigation));
 
 setupNavigation();
 
 //Start app from home page
 goTo('home');
 
-function registerView(name, section, setup, linkId) { 
+function registerView(name, section, setup, linkId) {
     const view = setup(section, navigation);
     views[name] = view;
     if (linkId) {
