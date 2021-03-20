@@ -7,15 +7,16 @@ function attachEvents() {
 function onSubmit(event) {
     event.preventDefault();
 
-    const input = event.target.querySelector('input').value;
-    let towns = input.split(',').map(e => e.trim());
+    let input = event.target.querySelector('input');
+    let towns = input.value.split(',').map(e => e.trim());
 
     const template = (towns) = html`
     <ul>
-        ${towns.map(town => html`
-        <li>${town}</li>`)}
+        ${towns.map(town => (town ? html`
+        <li>${town}</li>` : alert('Please add valid city name!')))}
     </ul>`;
 
+    input.value = '';
     const root = document.getElementById('root');
 
     render(template, root);

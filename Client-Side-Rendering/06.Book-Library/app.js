@@ -27,12 +27,12 @@ function attachEvents() {
 async function updateOrDelete(event) {
     if (event.target.tagName == 'BUTTON') {
         const id = event.target.parentNode.parentNode.id;
+        const form = document.querySelector('#edit-form');
+        const addForm = document.querySelector('#add-form');
         if (event.target.textContent == 'Edit') {
             const booktoUpdate = await getBookById(id);
 
-            const addForm = document.querySelector('#add-form');
             addForm.style = 'display:none';
-            const form = document.querySelector('#edit-form');
             form.style = '';
 
             form.querySelector('#author').value = booktoUpdate.author;
@@ -47,21 +47,24 @@ async function updateOrDelete(event) {
                     title: formData.get('title')
                 };
                 if (book.title == '' || book.author == '') {
-                    alert('All fields are recuired!');
-                    return;
+                    return alert('All fields are recuired!');
                 }
-                event.target.reset();
                 await updateBook(id, book);
+                event.target.reset();
 
                 form.style = 'display:none';
                 addForm.style.display = '';
                 onClick();
             });
         } else {
-            await fetch('http://localhost:3030/jsonstore/collections/books/' + id, {
-                method: 'delete'
-            });
-            onClick();
+            if (confirm('Are you sure you want to delete this book?')) {
+                await fetch('http://localhost:3030/jsonstore/collections/books/' + id, {
+                    method: 'delete'
+                });
+                form.style = 'display:none';
+                addForm.style.display = '';
+                onClick();
+            }
         }
     }
 }
@@ -72,11 +75,6 @@ async function updateBook(id, book) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(book)
     });
-    if (response.ok == false) {
-        const error = await response.json();
-        alert(error.message);
-        throw new Error(error.message);
-    }
 }
 
 async function getBookById(id) {
@@ -111,12 +109,11 @@ async function addBook(event) {
         title: formData.get('title')
     };
     if (book.title == '' || book.author == '') {
-        alert('All fields are recuired!');
-        return;
+        return alert('All fields are recuired!');
     }
+    await postBook(book);
     event.target.reset();
 
-    await postBook(book);
     onClick();
 }
 
